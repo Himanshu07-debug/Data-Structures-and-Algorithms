@@ -11,8 +11,23 @@
 
 // CONCEPT ---> PDF
 
+// Humko maximize krna hai nearest distance from any water cell to the land cell
+// Nearest --> BFS
 
-// We are Starting BFS from all 1's at the Starting ---> Multi Source BFS
+// APPROACH 1 ->
+// Hum each water cell pe jayenge, wha se BFS start krnge and calculate kar lenge uska nearest distance to the land cell...
+// In sab me jo distance maximum aayenga, wo ans....
+
+// TIME -> O( n^4 )  [ Worst case me n^2 water cell and sabpe BFS jo ]
+
+
+// OPTIMIZATION -->
+// We will reverse the Idea... Humko each 0 se 1 jna tha... 
+// Hum saare 1 se multi - source BFS start krnge to cover all the zeroes....
+
+// No. of level BFS will take to cover all zero -> Maximum distance 
+
+// We are Starting BFS from all 1's at the Starting  ---> Multi Source BFS
 
 
 
@@ -31,8 +46,52 @@ const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1; 
 const long long NINF = LLONG_MIN;
 
-int maxDistance(vector<vector<int>> &grid){
+int maxDistance(vector<vector<int>>& grid) {
 
+    int n = grid.size();
+    queue<pair<int, int>> q;
+
+    vector<vector<int>> visited = grid;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (visited[i][j] == 1)
+                q.push({i, j});
+        }
+    }
+
+    if (q.empty() || q.size() == n * n)
+        return -1;
+
+    int distance = 0;
+
+    vector<pair<int, int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    while (!q.empty()) {
+
+        int size = q.size();
+
+        while (size--) {
+
+            auto [x, y] = q.front();
+            q.pop();
+
+            for (auto [dx, dy] : dirs) {
+
+                int i = x + dx, j = y + dy;
+
+                if (i >= 0 && i < n && j >= 0 && j < n && visited[i][j] == 0) {
+                    visited[i][j] = 1;
+                    q.push({i, j});
+                }
+
+            }
+
+        }
+
+        distance++;
+
+    }
     
-
+    return distance - 1;
 }
