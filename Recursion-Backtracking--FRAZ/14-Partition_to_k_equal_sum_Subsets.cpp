@@ -18,6 +18,12 @@
 // There is a case when this condition will fail -->
 // Suppose arr = [7 9 5] , k = 3  ..... Yha sum(arr) % k = 0 , But aap equal sum subset me nhi kar sakte 
 
+// NAIVE -->
+// Will make a Bucket array of k size.. For each element in array, we will ask either to put that element in the first bucket, second Bucket, ..,
+// kth bucket... 
+// So for each element, we have k choices ... Height -> O(n)
+// TIME -> O(k ^ n)
+
 // We will go Bucket-wise and at a moment, we will fill a Single Bucket, If it is Successfully filled with the Required sum, We will move to 
 // fill another bucket.. If We successfully fill all the buckets with required sum, return...
 
@@ -92,8 +98,8 @@ bool canPartitionKSubsets(vector<int>& arr, int k) {
 }
 
 
-// TIME --> O(2 ^ (k * n))
-// height of the Tree -> O(n) and For Each Bucket, tree banega, O( k * n )
+// TIME --> O(k * (2 ^ n))
+// height of the Tree -> O(n) and For Each Bucket, tree banega
 
 // SPACE --> O(k * n)
 

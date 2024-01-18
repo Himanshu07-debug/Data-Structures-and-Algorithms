@@ -74,6 +74,6 @@ bool exist(vector<vector<char>>& board, string word) {
 // Worst case me aap n*m baar call kronge and Each Call ki max. height word.size() == k hongi...
 // n * m * O(4^k)
 
-// SPACE --> n * m * k
+// SPACE --> n * m * O(k)
 
 

@@ -24,6 +24,7 @@ bool check(vector<int> &selected, string &s){
 
     vector<int> selfCheck(26, 0);
 
+    // Checking for Duplicates in the string 
     for(int i=0; i < s.size() ; i++){
 
         if(selfCheck[s[i] - 'a'] == 1) return false;
@@ -32,6 +33,7 @@ bool check(vector<int> &selected, string &s){
 
     }
 
+    // Checking for duplicates in the Selected vector
     for(int i=0;i<s.size();i++){
 
         if(selected[s[i] - 'a'] == 1) return false;
