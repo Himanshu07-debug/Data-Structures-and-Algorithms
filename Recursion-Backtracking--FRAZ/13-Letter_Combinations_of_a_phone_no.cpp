@@ -64,3 +64,62 @@ vector<string> letterCombinations(string str){
 
 // Iterative ---------------------------------------->>
 
+// Simple BFS solution
+// Observe we are going Level by Level. 1st no. pad characters -> 2nd no. pad characters ....
+
+vector<string> letterCombinations(string str) {
+
+    vector<string> ans;
+
+    if(str.size() == 0) return ans;
+
+    int n = str.size();
+
+    vector<string> pad = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    queue<string> q;
+    q.push("");
+
+    int indx = 0;
+
+    while(!q.empty() && indx < n){
+
+        int z = q.size();
+
+        for(int i=0;i<z;i++){
+
+            string s = q.front();
+            q.pop();
+
+            string st = pad[str[indx] - '0'];
+
+            for(int j=0;j<st.size();j++){
+
+                string temp = s;
+                temp += st[j];
+
+                q.push(temp);
+
+            }
+
+        }
+
+        indx++;
+
+    }
+
+    // last level
+    while(!q.empty()){
+
+        ans.push_back(q.front());
+        q.pop();
+
+    }
+
+    return ans;
+
+}
+
+// We are handling the Recursion tree level part with an extra for loop, therefore n factor came
+// TIME -> O( n * 3^n ) [ indx n baar chalega and queue ke andar element 3^n honge ]
+
