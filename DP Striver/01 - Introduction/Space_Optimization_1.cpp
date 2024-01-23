@@ -60,6 +60,8 @@ void fib(){
 
 // 2. Problem - 01 ---->
 
+// Dice Combinations .. Each time You can make 6 movements... No. of moves to make n
+
 // dp[i] = sum of all dp[i-k]  .. ( 1 <= k <= 6)
 
 // Observe -> Each state depend only on its immediate previous 6 states answers

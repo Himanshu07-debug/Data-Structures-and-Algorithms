@@ -1,12 +1,23 @@
-// We are given an “N*M” matrix of integers. We need to find a path from the top-left corner to the bottom-right corner of the matrix, such 
+// We are given an “N*M” grid of integers. We need to find a path from the top-left corner to the bottom-right corner of the grid, such 
 // that there is a minimum cost past that we select.
 // At every cell, we can move in only two directions: right and bottom. The cost of a path is given as the sum of values of cells of the
-//  given matrix.
+//  given grid.
 
 // 5 9 6
 // 11 5 2
 // Ans -> 21
 // path with minimum value is (0,0) -> (0,1) -> (1,1) -> (1,2). And the sum along this path is 5 + 9 +5 + 2 = 21. So the ans is 21.
+
+
+// Why GREEDY will not work ???
+// 10  8  2
+// 10  5  100
+// 1   1  2
+// By Greedy -> 10 -> 8 -> 2 -> 100 -> 2  ==> 112
+// But , Min sum path -> 10 -> 10 -> 1 -> 1 -> 2
+
+// local optimum decision affect you in future / global optimum path
+
 
 // We are aware that ki if yeah 2 movements allowed hai, there will be Overlapping Subproblems.
 
@@ -76,4 +87,38 @@ int minSumPath(vector<vector<int>> &grid) {
 
 }
 
-// SPACE OPTIMIZATION is also Possible
+// SPACE OPTIMIZATION ----------------------------->>>
+
+int minSumPath(int n, int m, vector<vector<int>> &grid) {
+
+    vector<int> prev(m, 0); 
+
+    for (int i = 0; i < n; i++) {
+
+        vector<int> temp(m, 0); 
+
+        for (int j = 0; j < m; j++) {
+
+            if (i == 0 && j == 0)
+                temp[j] = grid[i][j]; 
+            else {
+
+                int up = 1e9;
+                int left = 1e9;
+                // Initialize with out of bound values
+
+                if(i - 1 >= 0) up = grid[i][j] + prev[j];
+
+                if(j - 1 >= 0) left = grid[i][j] + temp[j-1];
+
+                // Store the minimum path sum in temp[j]
+                temp[j] = min(up, left);
+            }
+        }
+        prev = temp; 
+
+    }
+
+    return prev[m - 1];
+    
+}

@@ -1,4 +1,4 @@
-// Logic nhi ban paaya mujse
+// Logic ban gya tha, Was unable to code -> Bhut Complex kar rha tha.. Always try to make min. change on Your Previous same Q.s code
 
 // Difference between House Robber 1 and House Robber 2 ----
 
@@ -19,7 +19,7 @@ using namespace std;
 // House Robber 1 logic
 long long solve(int n, vector<int>& arr) {
 
-    vector<long long int> dp(n, 0);
+    vector<long long> dp(n, 0);
 
     dp[0] = arr[0];
     
@@ -43,7 +43,7 @@ long long houseRobber(vector<int>& house)
     // Write your code here.
     int n = house.size();
 
-    if(n == 1) return house[0];
+    if(n == 1) return house[0];       // edge case ... IMP
 
     vector<int> temp1, temp2;          // 2 arrays
 

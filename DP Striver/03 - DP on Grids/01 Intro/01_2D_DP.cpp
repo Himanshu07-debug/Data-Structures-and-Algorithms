@@ -145,8 +145,11 @@ int ninjaTraining(int n, vector<vector<int>>& points) {
           dp[day][last] = max(dp[day][last], activity);
 
         }
+        
       }
+
     }
+
   }
 
   // The maximum points for the last day with any activity can be found in dp[n-1][3]
