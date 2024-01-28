@@ -3,7 +3,12 @@
 // Brute : O(n^3) -> Getting all subarrays and calculating max length
 // Naive : O(n^2) -> Subarray ke sum se lena dena hai, O(n^2) se bhi ho jayega
 // Better : O(n) -> Hashing ( Becomes OPTIMAL when array contains negative and positive integers both )
-// Optimal : O(n) -> 2 pointers ( sum <= k or sum >= k wali condition nhi, sum == k, so +ve elements chahiye )
+
+// 2 pointers ? 
+// If this question is of Checking, 2 pointers work... sum == k .. But only for non-negative integers
+// But if Counting Q.s is there, then 2 pointers work krnga for conditions sum <= k or sum >= k ... sum == k ke liye nhi
+
+// So agar 2 pointers se krna hi hai toh -> ( Count of Subarrays with sum <= k ) - ( Count of Subarrays with sum <= (k - 1) )
 
 
 // We can use a Hashmap to efficiently do this ( Jab bhi cnt jaisi cheeze rhti hai, hum hashset use nhi krte )
