@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "regex": "cpp"
+    }
+}

@@ -8,9 +8,6 @@
 
 // HOW TO HANDLE THE DUPLICATES ? ( Sorted triplets ko add krnge set me )
 
-// Complexitites -> O(N^3 * log(no. of unique triplets) )  && O(2 * no. of the unique triplets) [ set + o/p array ]
-
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -36,13 +33,14 @@ vector<vector<int>> Naive(int n, vector<int> &arr) {
     return ans;
 }
 
+// Complexitites -> O(N^3 * log(no. of unique triplets) )  && O(2 * no. of the unique triplets) [ set + o/p array ]
+
 
 // BETTER ------------------------------------------------------->>
 
 // A + B + C = 0 --->  -A = (B + C)   OR    C = -(A + B)  
 
 // Therefore we will select one number as target and apply Two sum in the rest of the array 
-
 
 vector<vector<int>> Better(int n, vector<int> &arr) {
 
@@ -79,13 +77,16 @@ vector<vector<int>> Better(int n, vector<int> &arr) {
     return ans;
 }
 
-// Complexitites -> O(N^2 * log(no. of unique triplets) ) & O(2 * no. of the unique triplets) + O[N] ( Extra set)
+// Complexitites -> O(N^2 * log(no. of unique triplets) ) & O(2 * no. of the unique triplets) [ ans + outer set ] + O[N] (hashset)
 
 
 // OPTIMAL --------------------------------------------------------->>> 
 
-// TIME cant be reduced but Space can, there is no need to have set, hashset if we used Two-pointer Approach
-// with initial sorting of array
+// 1st thing that comes to mind -> We were inserting sorted vector to our final answer to handle duplicates --> SORT the whole array
+
+// We will be requiring 3 indexes for 3 sum, We will fix i and run a 2 pointer technique in the rest of the array for getting the target
+
+// TIME cant be reduced but Space can, there is no need to have set, hashset if we used Two-pointer Approach with initial sorting of array
 
 // HANDLING THE DUPLICATES --> 
 // As our array is sorted, same numbers are present in consecutive manner.. If Certain number gives  a valid triplet, 
