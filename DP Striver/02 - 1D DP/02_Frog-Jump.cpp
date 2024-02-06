@@ -31,12 +31,11 @@ int Solve(int ind, vector<int>& height){
 
     if(ind == 0) return 0;
 
-
     int jumpTwo = INT_MAX;
-    int jumpOne= Solve(ind-1, height)+ abs(height[ind]-height[ind-1]);
+    int jumpOne= Solve(ind-1, height)+ abs(height[ind] - height[ind-1]);
 
     if(ind > 1)
-        jumpTwo = Solve(ind-2, height)+ abs(height[ind]-height[ind-2]);
+        jumpTwo = Solve(ind-2, height)+ abs(height[ind] - height[ind-2]);
     
     return min(jumpOne, jumpTwo);
 }

@@ -82,13 +82,15 @@ int mazeObstacles(int n, int m, vector< vector< int> > &mat) {
 
 	vector<int> prev(m, 0);
 
+	prev[0] = 1;
+
 	for(int i=0;i<n;i++){
 
 		vector<int> curr(m, 0);
 
 		for(int j = 0; j< m ;j++){
 
-			if(i == 0 && j == 0) curr[j] = 1;
+			if(i == 0 && j == 0) continue;
             else if(mat[i][j] == -1) curr[j] = 0;
 			else{
 

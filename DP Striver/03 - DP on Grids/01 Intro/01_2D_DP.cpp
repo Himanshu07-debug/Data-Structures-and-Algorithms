@@ -7,7 +7,7 @@
 
 
 // n = 3
-// matrix below ->
+// Matrix below ->
 // 1 2 5 
 // 3 1 1
 // 3 3 3

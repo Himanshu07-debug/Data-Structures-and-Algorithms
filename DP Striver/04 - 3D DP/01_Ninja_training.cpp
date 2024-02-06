@@ -53,8 +53,7 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
-int maxChoco(int i, int j1, int j2, vector<vector<int>> &grid, int c, int r, 
-    vector<vector<vector<int>>> &dp){
+int maxChoco(int i, int j1, int j2, vector<vector<int>> &grid, int c, int r, vector<vector<vector<int>>> &dp){
 
     if(j1 < 0 || j2 < 0 || j1 >= c || j2 >= c) return -1e9;
 
@@ -74,18 +73,17 @@ int maxChoco(int i, int j1, int j2, vector<vector<int>> &grid, int c, int r,
 
         for(int dj2 = -1 ; dj2 <= 1 ; dj2++){
 
-            int value = 0;
-
-            if(j1 == j2) value += grid[i][j1];
-            else value += grid[i][j1] + grid[i][j2];
-
-            value += maxChoco(i+1, j1 + dj1, j2 + dj2, grid, c, r, dp);
+            int value = maxChoco(i+1, j1 + dj1, j2 + dj2, grid, c, r, dp);
 
             mx = max(mx, value);
 
         }
 
     }
+
+    if(j1 == j2) dp[i][j1][j2] = grid[i][j1] + mx;
+    else dp[i][j1][j2] = grid[i][j1] + grid[i][j2] + mx;
+
 
     return dp[i][j1][j2] = mx;
 
@@ -148,17 +146,11 @@ int maximumChocolates(int r, int c, vector<vector<int>> &grid) {
 
                         int value = 0;
 
-                        if(j1 == j2) value += grid[i][j1];
-                        else value += grid[i][j1] + grid[i][j2];
-
                         int x = j1 + dj1;
                         int y = j2 + dj2;
 
                         if(x >= 0 && x < c && y >=0 && y < c){
-                            value += dp[i+1][j1+dj1][j2+dj2];
-                        }
-                        else{
-                            value += -1e9;  // Not valid path
+                            value = dp[i+1][j1+dj1][j2+dj2];
                         }
 
                         mx = max(mx, value);
@@ -166,7 +158,10 @@ int maximumChocolates(int r, int c, vector<vector<int>> &grid) {
                     }
 
                 }
-                dp[i][j1][j2] = mx;
+
+                if(j1 == j2) dp[i][j1][j2] = grid[i][j1] + mx;
+                else dp[i][j1][j2] = grid[i][j1] + grid[i][j2] + mx;
+
             }
         }
     }

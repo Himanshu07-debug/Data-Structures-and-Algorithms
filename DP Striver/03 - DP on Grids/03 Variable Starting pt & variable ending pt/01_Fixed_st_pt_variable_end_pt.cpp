@@ -148,24 +148,6 @@ int minimumPathSum(vector<vector<int>> &triangle, int n) {
 
 // SPACE -> O(n)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main() {
 
     vector<vector<int> > triangle{{1},
