@@ -15,7 +15,11 @@ using namespace std;
 
 // Framework -> DP, FORM -> DP on Strings, In this Form, Any Previously known Problem for this --->
 
+// One solution is to combine both the strings to make our answer. this is a solution with longest answer length, can we make it Shortest ?
+
 // Both String ka LCS final/ answer String me ek hi baar aayenga... So What we can use ???
+
+// Length of the Shortest Subsequence --> n + m - len(LCS)
 
 // We have done Printing of LCS ... Here also we have to Print also at once.. We can take advantage of it. 
 
