@@ -9,16 +9,23 @@ using namespace std;
 // The line from the Question -  "You can only hold at most one share of the stock at any time".
 // At most , means you can also go without a stock.
 
-// In this Question, at any iex i, If you purchased the stock previously, then you can't Purchased it again, you have to sell it first...
+// Therefore, Every day, we will have two choices, either to do nothing and move to the next day or to buy/sell. 
+// We need to generate all the choices in order to compare the profit. As we need to try out all the possible choices, we will use recursion.
+
+// In this Question, at any indx i, If you purchased the stock previously, then you can't Purchased it again, you have to sell it first...
 // This means I have to keep track of the info - that I purchased the stock previously or not..
 
 // We will keep a parameter -> buy
 // buy = 0 --> We had not purchased the stock previously
 // buy = 1 --> We had purchased the stock previously
 
+// CHOICE 1 -->
+// If we buy the stock on the current day. In this case, the net profit earned from the current transaction will be -arr[i]. As we are 
+// buying the stock, we are giving money out of our pocket, therefore the profit we earn is negative.
 
-// If purchased at iex i , we will add -arr[i] to the profit ( arr[sell] - arr[buy] , that's why final sum me -arr[buy] )
-// If sale at iex i, we will add arr[i] to the profit
+// CHOICE 2 -->
+// If we sell the stock on the current day. In this case, the net profit earned from the current transaction will be +arr[i].
+// As we are selling the stock, we are putting the money into our pocket, therefore the profit we earn is positive.
 
 
 // RECURSIVE -->
@@ -119,17 +126,17 @@ long getMaximumProfit(long *arr, int n) {
     long profit;
 
 
-    for (int ind = n - 1; ind >= 0; ind--) {
+    for (int i = n - 1; i >= 0; i--) {
 
         for (int buy = 0; buy <= 1; buy++) {
 
             if (buy == 0) { 
                 // We can buy the stock
-                profit = max(0 + ahead[0], -arr[ind] + ahead[1]);
+                profit = max(0 + ahead[0], -arr[i] + ahead[1]);
             }
 
             if (buy == 1) { // We can sell the stock
-                profit = max(0 + ahead[1], arr[ind] + ahead[0]);
+                profit = max(0 + ahead[1], arr[i] + ahead[0]);
             }
 
             cur[buy] = profit;
@@ -141,3 +148,35 @@ long getMaximumProfit(long *arr, int n) {
     return cur[0];
     
 }
+
+// NOTE -> Some Coders use 4 variables instead of curr and ahead vector and not the second loop of 2 . this will Optimize the code very little 
+//         bit.
+
+
+long getMaximumProfit(long *arr, int n) {
+
+    long aheadBuy, aheadNotBuy;
+    long currBuy, currNotBuy;
+
+    aheadBuy = aheadNotBuy = 0;
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        currBuy = max(0 + aheadBuy, -arr[i] + aheadNotBuy);
+
+        currNotBuy = max(0 + aheadNotBuy, arr[i] + aheadBuy);
+
+
+        aheadBuy = currBuy;
+        aheadNotBuy = currNotBuy;
+
+    }
+
+    return aheadBuy;
+
+}
+
+// GREEDY --------------------------------->>
+
+// Make a Graph, Purchased at low price day and sell it on high price day
+
