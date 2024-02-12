@@ -42,10 +42,10 @@ using namespace std;
 bool subsetSumUtil(int ind, int target, vector<int>& arr, vector<vector<int>>& dp) {
 
     if (target == 0)
-        return dp[ind][target] = true;
+        return true;
 
     if(ind == 0){
-        return dp[ind][target] = (arr[0] == target);
+        return (arr[0] == target);
     }
     
     if (dp[ind][target] != -1)
