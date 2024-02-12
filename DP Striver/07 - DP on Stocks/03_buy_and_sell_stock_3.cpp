@@ -120,3 +120,12 @@ int maxProfit(vector<int>& Arr, int n) {
 }
 
 
+// SPACE OPTIMIZATION ---------------------->>>
+
+// At most 2 transactions , what this actually means ?
+// Observe, We can do max 2 purchase and max 2 sell.... Order ==> B S B S ...
+// So agar Hum 4 transaction le, then on Even Transaction (0 , 2) we can sell on Transaction (1, 3) --> Buy parameter ki need nhi
+// This is only Space Optimization --> n * 2 * 2 ---> n * 4
+
+// NOTE --> Iska Implementation Buy and sell stock Problem - 4 me
+
