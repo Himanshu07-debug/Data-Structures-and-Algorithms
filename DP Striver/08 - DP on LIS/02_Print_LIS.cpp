@@ -8,6 +8,7 @@ using namespace std;
 // While Traversing the array, hum max LIS nikalenge ending at current indx 
 // For each indx, uske saare prev me traverse krnge and jo max length honga --> usme +1 
 
+// STATE --> dp[ i ] is the length of the longest increasing subsequence that is possible that end with index ind of the original array.
 
 int longest(vector<int> arr, int n) {
 
