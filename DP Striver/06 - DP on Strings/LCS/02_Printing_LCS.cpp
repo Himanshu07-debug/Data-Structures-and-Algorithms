@@ -3,7 +3,7 @@ using namespace std;
 
 // Algorithm ------------------------------->>
 
-// 1. We start from cell dp[n][m]. Initially i=n and j=m.
+// 1. We start from cell dp[n][m]. Initially i = n and j = m.
 
 // 2. At every cell, we will check if S1[i-1] == S2[j-1], if it is then it means this character is a part of the longest common subsequence. 
 //      So we will push it to the ans string str. Then we will move to the diagonally top-left(↖)  cell by assigning i to i-1 and j to j-1.

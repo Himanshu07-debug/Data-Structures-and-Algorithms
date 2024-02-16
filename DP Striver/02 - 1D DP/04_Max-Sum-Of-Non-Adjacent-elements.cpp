@@ -30,6 +30,17 @@ int fun(int i, vector<int> &arr, vector<int> &dp){
 
 }
 
+int maximumNonAdjacentSum(vector<int> &arr){
+    // Write your code here.
+
+    int n = arr.size();
+
+    vector<int> dp(n, -1);
+
+    return fun(n-1, arr, dp);
+
+}
+
 
 // Tabulation ----------------------------------------------->>>>
 
@@ -75,6 +86,7 @@ int solve(int n, vector<int>& arr) {
     for (int i = 1; i < n; i++) {
 
         int pick = arr[i];  // Maximum sum if we pick the current element
+
         if (i > 1)
             pick += prev2;  // Add the maximum sum two elements ago
         
@@ -88,17 +100,5 @@ int solve(int n, vector<int>& arr) {
     }
     
     return prev;  // Return the maximum sum
-
-}
-
-
-int maximumNonAdjacentSum(vector<int> &arr){
-    // Write your code here.
-
-    int n = arr.size();
-
-    vector<int> dp(n, -1);
-
-    return fun(n-1, arr, dp);
 
 }

@@ -51,7 +51,7 @@ int solve(int i, int j, int count, string str1, string str2){
 // 1. if(S1[i-1] != S2[j-1]), the characters don’t match, therefore the consecutiveness of characters is broken. So we set the cell value 
 // (dp[i][j]) as 0.
 
-// 2. if(S1[i-1] == S2[j-1]), then the characters match and we simply set its value to 1+dp[i-1][j-1]. We have done so because dp[i-1][j-1] 
+// 2. if(S1[i-1] == S2[j-1]), then the characters match and we simply set its value to 1 + dp[i-1][j-1]. We have done so because dp[i-1][j-1] 
 // gives us the longest common substring till the last cell character (current strings -{matching character}). As the current cell’s character 
 // is matching we are adding 1 to the consecutive chain.
 
