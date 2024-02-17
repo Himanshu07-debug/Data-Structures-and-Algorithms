@@ -33,7 +33,6 @@ using namespace std;
 
 const int prime = 1e9 + 7;
 
-
 int countUtil(string s1, string s2, int ind1, int ind2, vector<vector<int>>& dp) {
 
     // If s2 has been completely matched, return 1 (found a valid subsequence)

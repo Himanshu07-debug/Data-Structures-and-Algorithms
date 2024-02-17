@@ -41,11 +41,13 @@ using namespace std;
 // Function to solve the subset sum problem with memoization
 bool subsetSumUtil(int ind, int target, vector<int>& arr, vector<vector<int>>& dp) {
 
+    // If array size is 1, then dp[] will not updated at down, isliye base case pe update
+
     if (target == 0)
-        return true;
+        return dp[ind][target] = true;
 
     if(ind == 0){
-        return (arr[0] == target);
+        return dp[ind][target] = (arr[0] == target);      
     }
     
     if (dp[ind][target] != -1)
