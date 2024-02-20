@@ -20,7 +20,6 @@
 // RULES FOR PARTITION DP -->
 
 
-
 // 1. Start with the entire block/array and mark it with i,j. We need to find the value of f(i,j). 
 
 // NOTE -> In partition DP, you have to consider the entire array
