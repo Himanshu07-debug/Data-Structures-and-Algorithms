@@ -30,3 +30,6 @@ using namespace std;
 
 
 }
+
+// More Optimized Code --> KMP + Hashing
+// https://leetcode.com/problems/maximum-length-of-repeated-subarray/solutions/1324248/c-python-dp-kmp-hashing-solutions-clean-concise-o-nlogn/

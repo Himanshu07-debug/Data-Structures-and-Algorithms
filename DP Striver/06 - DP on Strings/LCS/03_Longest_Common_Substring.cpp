@@ -46,6 +46,8 @@ int solve(int i, int j, int count, string str1, string str2){
 
 // Thinking in terms of consecutiveness of characters
 
+// Let dp[i][j] is the longest common suffix between s1[0..i-1] and s2[0..j-1]
+
 
 // We have two conditions:
 // 1. if(S1[i-1] != S2[j-1]), the characters don’t match, therefore the consecutiveness of characters is broken. So we set the cell value 
@@ -117,8 +119,8 @@ int lcs(string &s1, string &s2){
     return ans; 
 }
 
-
 int main() {
+
     string s1 = "abcjklp";
     string s2 = "acjkp";
 
@@ -126,6 +128,7 @@ int main() {
     cout << "The Length of Longest Common Substring is " << lcs(s1, s2) << endl;
 
     return 0; // Return 0 to indicate successful program execution
+    
 }
 
 
