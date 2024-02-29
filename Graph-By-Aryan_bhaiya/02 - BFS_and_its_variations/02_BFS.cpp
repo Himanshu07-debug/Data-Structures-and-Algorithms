@@ -13,7 +13,7 @@ const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1; 
 const long long NINF = LLONG_MIN;
 
-void bfsOfGraph(int src, vector<int>& vis, vector<vector<int>>& gr) {
+void bfsOfGraph(int src, vector<int>& vis, vector<int> gr[]) {
 
     queue<int> q;
     q.push(src);
@@ -44,7 +44,7 @@ int main() {
     cin >> n >> m;
 
     // Graph Nodes are from 0 to n-1
-    vector<vector<int>> gr(n);
+    vector<int> gr[n + 1];
 
     for (int i = 0; i < m; i++) {
         int u, v;
