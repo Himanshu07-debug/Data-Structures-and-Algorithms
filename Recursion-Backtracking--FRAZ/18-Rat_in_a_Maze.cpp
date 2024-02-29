@@ -5,7 +5,7 @@
 // Note: In a path, no cell can be visited more than one time. If the source cell is 0, the rat cannot move to any other cell.
 
 
-// arr = {{1, 0, 0, 0},
+// arr =    {{1, 0, 0, 0},
 //          {1, 1, 0, 1}, 
 //          {1, 1, 0, 0},
 //          {0, 1, 1, 1}}
@@ -39,7 +39,7 @@ void help(int i, int j, int n, vector<vector<int>> &arr, string &path, vector<st
     // Non restricted position
     if(arr[i][j] == 0) return;
 
-    if( i == n-1 && j == n-1){
+    if(i == n-1 && j == n-1){
         ans.push_back(path);
         return;
     }

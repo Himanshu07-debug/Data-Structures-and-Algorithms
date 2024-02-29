@@ -23,19 +23,6 @@
 
 // By no. of nodes logic also, O(n!) nodes are possible
 
-
-// OPTIMIZATIONS -------------------------->>>
-
-// Hum isSafe() ki checking ko nullify kar sakte hai...
-
-// Before placing a queen in a cell, we check in top side ki koi Queen same column , Same top-right , Same top-left corner me to place nhi hai...
-
-// For same column -> Maintaining a column array..
-// For top-right Diagonal & top-left diagonal ---> See Image
-
-// Here isSafe() ka O(n) time is Nullified and Hence time -> O(n!)
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -131,8 +118,16 @@ vector<vector<int>> nQueen(int n){
 
 }
 
+// OPTIMIZATIONS -------------------------->>>
 
-// OPTIMIZED CODE ------------------------------>>>
+// Hum isSafe() ki checking ko nullify kar sakte hai...
+
+// Before placing a queen in a cell, we check in top side ki koi Queen same column , Same top-right , Same top-left corner me to place nhi hai...
+
+// For same column -> Maintaining a column array..
+// For top-right Diagonal & top-left diagonal ---> See Image
+
+// Here isSafe() ka O(n) time is Nullified and Hence time -> O(n!)
 
 // Copy paste the same code, just few changes
 
