@@ -60,7 +60,7 @@ int knightDialer(int n) {
 // By this, we only have to keep track of digit and length
 
 // This will not Reduce the TIME & space but will allow us to move 2d DP
-// In our code -> 10 possible (i, j) --> 10 * n
+// In our code -> 10 possible (i, j) --> 10 * n * 8
 // In 2D dp, 10 digits * n 
 // Therefore time and Space are Same
 

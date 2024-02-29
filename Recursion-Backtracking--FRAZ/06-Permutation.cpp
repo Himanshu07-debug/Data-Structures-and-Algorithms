@@ -5,7 +5,7 @@
 
 // For a String of length n, we can have n! permutations...
 
-// We know that, while finding Permutation, we put all the remaining elements in the R.H.S of the string to the Current position and Do this Thing
+// We know that, while finding Permutation, we put all the remaining elements at the R.H.S of the string to the Current position and Do this Thing
 // Recursively for the further position...
 
 // But we are lazy, mai sirf first position pe saare remaining elements R.H.S ke laaunga, Baaki aage ke position ka Recursion dekh lenga..
