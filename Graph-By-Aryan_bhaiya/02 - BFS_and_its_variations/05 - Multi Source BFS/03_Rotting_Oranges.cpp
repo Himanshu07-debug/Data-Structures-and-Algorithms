@@ -86,6 +86,7 @@ int orangesRotting(vector<vector<int>>& grid) {
         }
     }
 
+    // If all cell were 0 in Input matrix
     if(time > 0) time--;
 
     return time;
