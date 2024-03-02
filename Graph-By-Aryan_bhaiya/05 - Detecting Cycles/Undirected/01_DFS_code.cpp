@@ -13,6 +13,12 @@ const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1; 
 const long long NINF = LLONG_MIN;
 
+// For every node, its parent will always have visited as true
+// So you can't only say that if any child of the node has visited true, there exists cycle , becz visited == true wla uska Parent bhi ho skta hai
+// Cycle will be there if the child is visited but not the parent of the curr node
+
+// Keep track of parent of each child
+
 bool cycleInUndirectedgraph(int node, vector<vector<int>>& graph, vector<bool>& visited, int parent) {
 
     visited[node] = true;

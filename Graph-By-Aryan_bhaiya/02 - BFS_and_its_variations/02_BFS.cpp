@@ -58,3 +58,5 @@ int main() {
     bfsOfGraph(0, vis, gr);
     
 }
+
+// TIME --> O( V + E ) [ going to every node & edge exactly once ]
