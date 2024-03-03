@@ -13,7 +13,13 @@ const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1; 
 const long long NINF = LLONG_MIN;
 
-// you can assume Path visited array as Recursive call stack holding the current DFS traversal nodes....
+// In this, You cant say that if the child is already visited, Cycle..
+// It should be in the Same path .. i.e at the recursive stack
+
+// Eg -> 0 -> 1 -> 2 -> 3  and from 1 -> 4 -> 3 
+// Apply DFS here in this Graph, No cycle but visited ke sath chale to Cycle
+
+// You can assume Path visited array as Recursive call stack holding the current DFS traversal nodes....
 
 // Function to detect cycle in a directed graph.
 bool cycleInDirectedGraph(int node, vector<int> gr[], vector<bool>& visited, vector<bool>& pathVisited) {

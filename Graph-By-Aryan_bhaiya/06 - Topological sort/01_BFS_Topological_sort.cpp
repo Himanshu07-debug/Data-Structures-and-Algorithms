@@ -1,4 +1,17 @@
-// Topological Sort Defination --> PDF
+// Topological Sort Defination --> 
+// In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for
+//  every directed edge (u,v) from vertex u to vertex v, u comes before v in the ordering.
+
+
+// You only have to worry about ki Parent ke phle child na aaye.. Otherwise valid ordering bhut saari ho skti hai
+
+// Ex -> Graph ==> 0 -> { 2, 3 } , 1 -> { 3, 4 } .. 0 and 1 both have indegree 0
+// Valid Topological sort --> 
+// 0 1 2 3 4 
+// 1 4 0 3 2
+// 0 2 1 4 3
+// 0 1 3 2 4
+// ....
 
 // BFS Solution of Topological sort is more Intuitive....
 
@@ -50,7 +63,7 @@ vector<int> topoSort(int V, vector<int> gr[]) {
 
         int sz = q.size();
 
-        while (sz--) {
+        while (sz--) {             // no need to maintain this level as this is not Distance output question
 
             int node = q.front();
             q.pop();
