@@ -2,6 +2,13 @@
 
 // How we came to this IDEA ??? No matter, aap konse node se start kar rhe ho DFS, there is some similarity in the ending nodes of each path...
 
+// DFS from any node ensure that ki wo node ke possible childs jo ho skte hai Deep jaane pe, wo to atleast usase phle array me insert ho jayenge
+// Same thing goes for other Nodes also .. All childs done then the parent...
+
+// This Combined Effect leads to Correct Ordering --> Only yha pe topo sort reverse honga, we have to reverse it to get the correct order..
+
+// NOTE --> We can Start from any node --> NO ISSUE in DFS
+
 
 #include<bits/stdc++.h>
 
