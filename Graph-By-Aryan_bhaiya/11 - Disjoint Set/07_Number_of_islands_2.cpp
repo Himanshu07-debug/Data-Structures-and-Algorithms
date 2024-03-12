@@ -1,51 +1,118 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-  public:
+class DisjointSet {
 
-    void dfs(int i, int j, int n, int m, vector<vector<int>> &res, vector<vector<int>> &vis){
+    vector<int> parent, size;
 
-        if(i < 0 || j < 0 || i >= n || j >= m || vis[i][j] == 1 || res[i][j] == 0) return;
+public:
+    DisjointSet(int n) {
 
-        vis[i][j] = 1;
+        parent.resize(n + 1);
+        size.resize(n + 1);
 
-        dfs(i-1, j, n, m, res, vis);
-        dfs(i+1, j, n, m, res, vis);
-        dfs(i, j-1, n, m, res, vis);
-        dfs(i, j+1, n, m, res, vis);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
 
     }
 
-    vector<int> numOfIslands(int n, int m, vector<vector<int>> &arr) {
+    int findUPar(int node) {
 
-        vector<vector<int>> res(n, vector<int> (m, 0));
+        if (node == parent[node])
+            return node;
+
+        return parent[node] = findUPar(parent[node]);
+
+    }
+
+
+    void unionBySize(int u, int v) {
+
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+
+        if (ulp_u == ulp_v) return;
+
+        if (size[ulp_u] < size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+
+};
+
+class Solution {
+  public:
+
+    vector<int> numOfIslands(int n, int m, vector<vector<int>> &op) {
+
+        vector<vector<int>> arr(n, vector<int>(m, 0));
+
+        DisjointSet ds(n * m);
+
+        int cnt = 0;
 
         vector<int> ans;
+        
+        unordered_set<int> st;
 
-        for(int i=0;i<arr.size();i++){
+        vector<pair<int,int>> dir = {{0, -1} , {0, 1} , {1, 0} , {-1, 0}};
 
-            int cnt = 0;
+        for(auto xa : op){
 
-            int x = arr[i][0] , y = arr[i][1];
+            int i = xa[0] , j = xa[1];
+            
+            int curr = i*m + j;
+            
+            if(!st.count(curr)){
+                set<int> s;
 
-            res[x][y] = 1;
-            vector<vector<int>> vis(n, vector<int> (m, 0));
-
-            for(int j=0;j<n;j++){
-                for(int k = 0; k< n;k++){
-
-                    if(res[j][k] == 1 && vis[j][k] == 0){
-                        dfs(j, k, n, m, res, vis);
-                        cnt++;
+                arr[i][j] = 1;
+                
+                cnt++;
+                
+                for(pair<int,int> p : dir){
+    
+                    int x = i + p.first;
+                    int y = j + p.second;
+    
+                    if(x >= 0 && y >= 0 && x < n && y < m && arr[x][y] == 1){
+    
+                        int node = x*m + y;
+    
+                        int parent = ds.findUPar(node);
+    
+                        if(!s.count(parent)) cnt--;
+    
+                        s.insert(parent);
+    
+                        ds.unionBySize(curr, node);
+    
                     }
-
+    
                 }
+
             }
+            
+            
+            st.insert(curr);
 
             ans.push_back(cnt);
 
         }
 
+        // for(int x : ans) cout << x << " ";
+
+        // cout << endl;
+
+        return ans;
+       
     }
+
 };
