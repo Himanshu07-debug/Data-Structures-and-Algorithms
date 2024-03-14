@@ -85,9 +85,9 @@ vector<int> dijkstra(int V, vector<vector<int>> adj[], int S)
                 if(dist[adjNode] != 1e9) 
                     st.erase({dist[adjNode], adjNode}); 
                     
-                // If current distance is smaller, push it into the queue
-                dist[adjNode] = dis + edgW; 
-                st.insert({dist[adjNode], adjNode}); 
+                    // If current distance is smaller, push it into the queue
+                    dist[adjNode] = dis + edgW; 
+                    st.insert({dist[adjNode], adjNode}); 
                 }
         }
     }
