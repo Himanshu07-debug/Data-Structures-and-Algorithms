@@ -13,25 +13,23 @@ const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1;
 const long long NINF = LLONG_MIN;
 
-int firstUniqChar(string s) {
+int findJudge(int n, vector<vector<int>>& arr) {
 
-    int n = s.size();
+    vector<int> ind(n+1, 0) , out(n+1, 0);
 
-    int cnt[256] = {0};
+    for(auto x : arr){
+        ind[x[1]]++;
+        out[x[0]]++;
+    } 
 
-    int indx = -1;
+    for(int i=1;i<=n;i++){
 
-    for(int i=n-1;i>=0;i--){
-
-        if(cnt[s[i]] == 0){
-            indx = i;
+        if(ind[i] == n-1 && out[i] == 0){
+            return i;
         }
-        cnt[s[i]]++;
 
     }
 
-    if(indx != -1 && cnt[s[indx]] == 1) return indx;
+    return -1;
 
-    return indx; 
-        
 }

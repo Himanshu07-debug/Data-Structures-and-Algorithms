@@ -85,7 +85,7 @@ int maxSubArray(vector<int>& arr) {
 
     int maxSum = arr[0];
 
-    arr[0] = arr[0] > 0 ? 0 : arr[0];
+    arr[0] = arr[0] < 0 ? 0 : arr[0];
 
     for(int i=1;i<arr.size();i++){
 
