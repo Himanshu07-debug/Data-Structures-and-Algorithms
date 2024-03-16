@@ -120,6 +120,7 @@ vector<int> zMatch(string s){
 
     for(int i = 1; i < s.size(); i++){
 
+        // ith character is within the last boundary
         if(i < r){
             z[i] = z[i - l];
 

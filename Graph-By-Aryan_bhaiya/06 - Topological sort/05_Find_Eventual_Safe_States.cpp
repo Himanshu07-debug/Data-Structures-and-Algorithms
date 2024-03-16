@@ -1,114 +1,117 @@
-// There is a directed graph of n nodes with each node labeled from 0 to n - 1. The graph is represented by a 0-indexed 2D integer array graph 
-// where graph[i] is an integer array of nodes adjacent to node i, meaning there is an edge from node i to each node in graph[i].
-
-// A node is a terminal node if there are no outgoing edges. A node is a safe node if every possible path starting from that node leads to a 
-// terminal node (or another safe node).
-
-// Return an array containing all the safe nodes of the graph. The answer should be sorted in ascending order.
-
-// Input: graph = [[1,2],[2,3],[5],[0],[5],[],[]]
-// Output: [2,4,5,6]
-// Nodes 5 and 6 are terminal nodes as there are no outgoing edges from either of them.
-// Every path starting at nodes 2, 4, 5, and 6 all lead to either node 5 or 6.
-
-// CONSTRAINT ------------->>>
-// n == graph.length
-// 1 <= n <= 10^4
-// 0 <= graph[i].length <= n
-// 0 <= graph[i][j] <= n - 1
-// graph[i] is sorted in a strictly increasing order.
-// The graph may contain self-loops.
-// The number of edges in the graph will be in the range [1, 4 * 10^4]
-
-
-
-// LOGIC ----------------------------------------------------------------------------->>>>>>
-
-
-// This is Same like Topological sort but yha pe Outdegree ki baat hui hai....
-// So, hume Outdegree calculate krnge each node ki... Ek reverse graph baneage jha node will store their incoming nodes given graph se...
-// Now outdegree 0 wale nodes ko add krnge and then unko remove krnge
-// Remove kiye to wo nodes jinka edge inpe tha wo unke outdegree 1 se reduce honga... If outdegree 0 hua nodes ka add kar denge queue me...
-// Child of nodes i.e the list of incoming nodes is stored in reverse graph...
-
-
-
-#include<bits/stdc++.h>
-
-#include <ext/pb_ds/assoc_container.hpp> 
-#include <ext/pb_ds/tree_policy.hpp> 
-
+#include <bits/stdc++.h>
 using namespace std;
-using namespace __gnu_pbds; 
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> PBDS;
+// Observe , all possible paths starting from a node are going to end at some terminal node unless there exists a cycle and the paths
+// return back to themselves.
+// so we can use Concept of "Cycles in Directed Graph"
 
-#define endl '\n'
-const long long MOD = 1e9 + 7;
-const long long INF = LLONG_MAX >> 1; 
-const long long NINF = LLONG_MIN;
+// In a DFS path, first we go at depth, then while backtracking, we will add nodes if no cycles detected...
+// A safe node is one whose all path ends at terminal node or at some safe node.. How this is ensured ??
+// Terminal node pe sure hai ki outdegree 0 hai becz agar child hote and unvisited hote to unke pass jaata call OR agar child visited hote to,
+// cycle detect hota ..
+// There is one more case --> vis[child] = true and pathVis[child] = false .. Cycle detect nhi hua but curr node ko terminal nhi kah sakte usase,
+// edge nikla hai , but it is Safe node as it will be ending at some terminal node...
 
-vector<int> eventualSafeNodes(vector<vector<int>>& edges) {
-
-    int n = edges.size();
-
-    vector<int> graph[n];
-
-    vector<int> outdegree(n,0);
-
-    for(int i=0;i<n;i++){
-
-        outdegree[i] = edges[i].size();
-
-        for(int x : edges[i]){
-            graph[x].push_back(i);
-        }
-
-    }
-
-    vector<int> ans;
-
-    queue<int> q;
-
-    for(int i=0;i<n;i++) {
-        if(outdegree[i] == 0) q.push(i);
-    }
-
-
-        vector<int> tSort;
-
-    while (!q.empty()) {
-
-        int sz = q.size();
-
-        while (sz--) {
-
-            int node = q.front();
-            q.pop();
-
-            // adding in topological vector
-            tSort.push_back(node);
-
-            for (auto ne : graph[node]) {
-
-                outdegree[ne]--;
-
-                // indegree of node == 0
-                if (outdegree[ne] == 0)
-                    q.push(ne);
-
+bool dfsCheck(int node, vector<int> adj[], int vis[], int pathVis[], int check[])
+{
+    vis[node] = 1;
+    pathVis[node] = 1;
+    check[node] = 0;
+    // traverse for adjacent nodes
+    for (auto it : adj[node])
+    {
+        // when the node is not visited
+        if (!vis[it])
+        {
+            if (dfsCheck(it, adj, vis, pathVis, check) == true)
+            {
+                check[node] = 0;
+                return true;
             }
-
         }
-
+        // if the node has been previously visited but it has to be visited on the same path
+        else if (pathVis[it])
+        {
+            check[node] = 0;
+            return true;
+        }
     }
-
-    sort(tSort.begin(), tSort.end());
-
-    return tSort;
-
-        
+    check[node] = 1;
+    pathVis[node] = 0;
+    return false;
 }
 
 
+vector<int> eventualSafeNodes(int V, vector<int> adj[])
+{
+    int vis[V] = {0};
+    int pathVis[V] = {0};
+    int check[V] = {0};
+    vector<int> safeNodes;
+    for (int i = 0; i < V; i++)
+    {
+        if (!vis[i])
+        {
+            dfsCheck(i, adj, vis, pathVis, check);
+        }
+    }
+    for (int i = 0; i < V; i++)
+    {
+        if (check[i] == 1)
+            safeNodes.push_back(i);
+    }
+    return safeNodes;
+}
 
+
+// TOPO ---------------------------------------------------------------->>>
+
+// Changing the Graph connection...
+// terminal nodes ka indegree 0 ho jayega... Topo Sort
+
+vector<int> eventualSafeNodes(vector<vector<int>> &graph)
+{
+
+    int n = graph.size();
+
+    vector<int> in(n);
+    vector<int> gr[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int x : graph[i])
+        {
+            gr[x].push_back(i);
+            in[i]++;
+        }
+    }
+
+    queue<int> q;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (in[i] == 0)
+            q.push(i);
+    }
+
+    vector<int> tSort;
+
+    while (!q.empty())
+    {
+
+        int x = q.front();
+        q.pop();
+
+        tSort.push_back(x);
+
+        for (int y : gr[x])
+        {
+
+            in[y]--;
+            if (in[y] == 0)
+                q.push(y);
+        }
+    }
+
+    return tSort;
+}
