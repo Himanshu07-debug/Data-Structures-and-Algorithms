@@ -26,11 +26,32 @@
 
 // LOGIC -------------------->>
 
-// Refer PDF to see how we came up with the intuition for Topological Sort and why naive do not work...
 
-// 1. Here, we can try out all possible paths by doing DFS , but there can be many path and it will give TLE
+
+// A COMMON MISTAKE ---> DP + Graph
+
+// Hum DP le lenge and DFS me backtrack krte samay dp me uss node ke liye uss path ka answer store kar lenge.. Next time yeah node se koi mangega
+// to DP de denga ---> O(V + E)
+
+// WRONG APPROACH --> Here we want max value, not value to add for the further path. Imagine aap kisi node se aa rhe ho and red color ka cnt = 3 
+//                    hai.. Path me ek node encounter hua jiski DP me value hai.. Can we can take max between cnt and dp[i] --> NO
+//                    Becz we dont know ki dp[i] ne kis color ke liye value store kar ke rakhi hai.. Agar usne 3 store kiya hai 3 blue color ke
+//                    liye lekin uske path me 2 red color the jo min the, curr path me cnt = 3 hai red ki, wo dono add honge to cnt = 5 honga 
+//                    max value 5 aayenga yeah path ka
+
+// Option is to have 2d DP with each node with freq of 26 characters stored, but how will You determine that ki dp[i] was calculated before..
+// It will be Complex to Do
+
+
+// Aryan Bhai PDF link - 
+// https://leetcode.com/problems/largest-color-value-in-a-directed-graph/solutions/3396205/image-explanation-simple-bfs-complete-intuition-c-java-python/
+
+
+// 1. Here, we can try out all possible paths by doing DFS from each node , but there can be many path and it will give TLE 
+// ( 10^5 nodes and 10^5 edges  )
+
 // 2. We can observe that ki path of length 3 me color value 2 hai to path length 4 me color value >= 2 hi rhngi, decrease nhi hongi..
-// So hum internal nodes ke path ko nullify kar dete to reduce the no. of paths. Max. length ke nodes ki path hi try krnge..
+// So hum internal nodes ke path ko nullify kar dete -> to reduce the no. of paths. Max. length ke nodes ki path hi try krnge..
 // 3. But here also overlapping is possible, PDF me diagram hai....
 // 4. So, har baar path bnana by selecting source nodes and overlapping nodes se traverse krne se aacha hai ki Parent hi apni Color value apne 
 // child me spread krde.
