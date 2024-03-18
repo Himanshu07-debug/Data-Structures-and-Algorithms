@@ -12,4 +12,3 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 const long long MOD = 1e9 + 7;
 const long long INF = LLONG_MAX >> 1;
 const long long NINF = LLONG_MIN;
-

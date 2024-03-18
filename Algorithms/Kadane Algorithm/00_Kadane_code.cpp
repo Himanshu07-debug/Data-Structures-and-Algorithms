@@ -81,7 +81,7 @@ int maxSubArray(vector<int>& arr) {
 // BETTER --> O(n ^ 2) [ running Sum ]
 // BEST --> O(n) 
 
-int maxSubArray(vector<int>& arr) {
+int kadane(vector<int>& arr) {
 
     int maxSum = arr[0];
 

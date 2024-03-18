@@ -1,3 +1,17 @@
+#include<bits/stdc++.h>
+
+#include <ext/pb_ds/assoc_container.hpp> 
+#include <ext/pb_ds/tree_policy.hpp> 
+
+using namespace std;
+using namespace __gnu_pbds; 
+
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> PBDS;
+
+#define endl '\n'
+const long long MOD = 1e9 + 7;
+const long long INF = LLONG_MAX >> 1;
+
 // There is a directed graph of n colored nodes and m edges. The nodes are numbered from 0 to n - 1.
 
 // You are given a string colors where colors[i] is a lowercase English letter representing the color of the ith node in this graph (0-indexed). 
@@ -27,55 +41,111 @@
 // LOGIC -------------------->>
 
 
+// For any path, agar kisi color ki value 2 hai, then aage path me uss color ki value >= 2 hongi .. less nhi ho skti
 
-// A COMMON MISTAKE ---> DP + Graph
+// We will use this concept and will explore the longest path.. Baaki short-short path ka bhi results rkhe rhnge i.e keeping track of all paths
 
-// Hum DP le lenge and DFS me backtrack krte samay dp me uss node ke liye uss path ka answer store kar lenge.. Next time yeah node se koi mangega
-// to DP de denga ---> O(V + E)
+// DFS ------------------------------->>
 
-// WRONG APPROACH --> Here we want max value, not value to add for the further path. Imagine aap kisi node se aa rhe ho and red color ka cnt = 3 
-//                    hai.. Path me ek node encounter hua jiski DP me value hai.. Can we can take max between cnt and dp[i] --> NO
-//                    Becz we dont know ki dp[i] ne kis color ke liye value store kar ke rakhi hai.. Agar usne 3 store kiya hai 3 blue color ke
-//                    liye lekin uske path me 2 red color the jo min the, curr path me cnt = 3 hai red ki, wo dono add honge to cnt = 5 honga 
-//                    max value 5 aayenga yeah path ka
+// So agar kisi src se multiple path nikal rhe hai.. To uske cnt array me jo values update hue honge wo max color value freq honge jo usase nikle
+// hue multiple path ke honge... 
+// Now we have to select the maximum freq wla color  ---> this shows humne wo path choose kiye jha se yeah wla max freq aa rha hai ..
+// This is the max color value for the src...
 
-// Option is to have 2d DP with each node with freq of 26 characters stored, but how will You determine that ki dp[i] was calculated before..
-// It will be Complex to Do
+// In DFS we are letting our whole childs to propogate the src cnt array and then src array khud ko update krke max return krta hai
 
+// Leetcode pe chal gya code --> Time --> O( V + E )
+
+// There is possibility ki code na chale --> becz if there are many paths .. For very tight constraint
+
+// TOPO is Efficient --> First tell DFS , then TOPO
+
+
+int dfs(int src, vector<int> &vis, vector<int> &pathVisited, vector<vector<int>> &graph, vector<vector<int>> &cnt, string &colors){
+
+    vis[src] = 1;
+    pathVisited[src] = 1;
+
+    for(int v : graph[src]){
+
+        if(!vis[v]){
+            if(dfs(v, vis, pathVisited, graph, cnt, colors) == INT_MAX){
+                return INT_MAX;
+            }
+
+        }
+        else if(pathVisited[v] == 1) return INT_MAX;
+
+        // MISTAKE --------------->>
+
+        // I was writing this for loop in the !vis[v] scope i.e agar cycle nhi aaya to child propogate krnge their cnt array to parent
+        // This was mistake becz agar koi dursa path aa rha hai wo koi visited node pe jaata hai to we want ki visited wla DFS aage na badhaye,
+        // apna cnt array propogate krde src ko, but uss scope me likhne ke wajah se sirf non-visited wle childs propogate kar rhe the value
+        for(int i=0;i<26;i++){
+
+            cnt[src][i] = max(cnt[src][i] , cnt[v][i]);
+
+        }
+
+    }
+
+    pathVisited[src] = 0;
+
+    cnt[src][colors[src] - 'a']++;
+
+    int mx = *max_element(cnt[src].begin(), cnt[src].end());
+
+    return mx;
+
+}
+
+
+int largestPathValue(string colors, vector<vector<int>>& edges) {
+
+    int n = colors.size();
+
+    vector<vector<int>> graph(n, vector<int>());
+
+    for (vector<int>& edge : edges) {
+        graph[edge[0]].push_back(edge[1]);
+    }    
+
+    vector<int> vis(n, 0) , pathVisited(n, 0);
+
+    vector<vector<int>> cnt(n, vector<int>(26, 0));
+
+    int res = 0;
+
+    for(int i=0;i<n && res != INT_MAX ; i++){
+
+        if(vis[i] == 0){
+            res = max(res, dfs(i, vis, pathVisited, graph, cnt, colors));
+        }
+        else{
+            int mx = *max_element(cnt[i].begin(), cnt[i].end());
+            res = max(res, mx);
+        }
+
+    }
+
+    if(res == INT_MAX) return -1;
+    
+    return res;
+
+
+}
+
+// TOPOLOGICAL SORT --------------------------------------->>
+
+// Normal behaviour of DFS ki phle all childs then parent propogation can be reverted as in BFS..
+
+// child ko jab saare parents propogate kar denge apni cnt values then child queue me aayenga ---> TOPO...
+
+// See PDF 
 
 // Aryan Bhai PDF link - 
 // https://leetcode.com/problems/largest-color-value-in-a-directed-graph/solutions/3396205/image-explanation-simple-bfs-complete-intuition-c-java-python/
 
-
-// 1. Here, we can try out all possible paths by doing DFS from each node , but there can be many path and it will give TLE 
-// ( 10^5 nodes and 10^5 edges  )
-
-// 2. We can observe that ki path of length 3 me color value 2 hai to path length 4 me color value >= 2 hi rhngi, decrease nhi hongi..
-// So hum internal nodes ke path ko nullify kar dete -> to reduce the no. of paths. Max. length ke nodes ki path hi try krnge..
-// 3. But here also overlapping is possible, PDF me diagram hai....
-// 4. So, har baar path bnana by selecting source nodes and overlapping nodes se traverse krne se aacha hai ki Parent hi apni Color value apne 
-// child me spread krde.
-// 5. We have to ensure that ki jab child ke saare parents apni color value spread krde child me, uske baad hi child ko push kru queue me. Becz 
-//    diff parent diff path ke honge, kiska color value jyada hai, how we can determine first ? Sabko try krna padega
-// 6. Dependency, topological sort....
-
-
-// SEE HOW THE CODE IS DONE...
-// Har node pe a-z me se koi bhi color ho sakta hai... So Each node with 26 ka vector for colors...
-
-#include<bits/stdc++.h>
-
-#include <ext/pb_ds/assoc_container.hpp> 
-#include <ext/pb_ds/tree_policy.hpp> 
-
-using namespace std;
-using namespace __gnu_pbds; 
-
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> PBDS;
-
-#define endl '\n'
-const long long MOD = 1e9 + 7;
-const long long INF = LLONG_MAX >> 1;
 
 int largestPathValue(string colors, vector<vector<int>>& edges) {
 
@@ -118,10 +188,13 @@ int largestPathValue(string colors, vector<vector<int>>& edges) {
 
         for (int v : graph[u]) {
 
-            for (int i = 0; i < 26; i++) {
-                counts[v][i] =
-                    max(counts[v][i],
-                        counts[u][i] + (colors[v] - 'a' == i ? 1 : 0));
+            char color = colors[v];
+
+            for(int i=0;i<26;i++){
+
+                if(i == color - 'a') counts[v][i] = max(counts[v][i] , counts[u][i] + 1);
+                else counts[v][i] = max(counts[v][i] , counts[u][i]);
+
             }
 
             indegrees[v]--;
@@ -137,4 +210,6 @@ int largestPathValue(string colors, vector<vector<int>>& edges) {
     return visited == n ? max_count : -1;
     
 }
+
+
 
