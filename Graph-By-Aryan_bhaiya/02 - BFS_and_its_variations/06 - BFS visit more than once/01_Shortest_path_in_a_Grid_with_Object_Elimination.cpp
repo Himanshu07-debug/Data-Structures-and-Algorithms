@@ -18,9 +18,6 @@
 
 // shortest path --> BFS
 
-// For Explanation, Dry Run, Feel Agar Aap nhi kar paa rhe ho ---> PDF
-
-
 // NOTE -> Here Each cell pe diff. states ho sakte hai based on the elimination power values 
 //         So ek 3rd parameter bhi rhnga BFS me for Elimination power values....
 

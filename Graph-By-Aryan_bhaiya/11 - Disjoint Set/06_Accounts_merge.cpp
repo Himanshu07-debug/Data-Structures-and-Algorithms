@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// DSU creation with map  { mail : indx }
+// Create a vector<string> to store strings of islands with no. indx
+// Now, add all them in the final answer.. Also sort them
+
 class DisjointSet {
 
 public:

@@ -65,7 +65,7 @@ public:
         }
 
         for (int i = 0; i < dist.size(); ++i) {
-            if (dist[i] == 1e9)dist[i] = -1;
+            if (dist[i] == 1e9) dist[i] = -1;
         }
 
         return dist;
