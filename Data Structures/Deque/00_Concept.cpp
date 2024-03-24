@@ -34,6 +34,7 @@ using namespace std;
 
 void monotonic_insert(deque<int> &dq, int i, vector<int> &arr){
 
+    // Removing indexes values from back if there value is less than incoming index
     while(!dq.empty() && arr[dq.back()] < arr[i]){
         dq.pop_back();
     }
