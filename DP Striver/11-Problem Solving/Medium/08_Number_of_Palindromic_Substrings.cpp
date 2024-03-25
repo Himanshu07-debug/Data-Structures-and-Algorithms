@@ -163,7 +163,7 @@ int countSubstrings(string s) {
 
 // 2 pointer Approach --->
 
-// Till now, we were Shrinking i and j
+// Till now, we were Shrinking i and j in Palindrome Code
 // So Rather than shrinking, Lets Expand from Center ...
 
 // 2 types of Expansion Possible ---> 
