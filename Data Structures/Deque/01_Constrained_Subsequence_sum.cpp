@@ -1,6 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Given an integer array nums and an integer k, return the maximum sum of a non-empty subsequence of that array such that for every two 
+// consecutive integers in the subsequence, nums[i] and nums[j], where i < j, the condition j - i <= k is satisfied.
+
+// Input: nums = [10,2,-10,5,20], k = 2
+// Output: 37    [10, 2, 5, 20].
+
+// Input: nums = [-1,-2,-3], k = 1
+// Output: -1
+// Explanation: The subsequence must be non-empty, so we choose the largest number.
+
+// Input: nums = [10,-2,-10,-5,20], k = 2
+// Output: 23    [10, -2, -5, 20].
+
+
+// 1 <= k <= nums.length <= 10^5        ------------>>> DP fails
+// -10^4 <= nums[i] <= 10^4
+
+
 // Same like LIS....
 // Let dp[i] -> maximum sum of the subsequence ending at indx i..
 
