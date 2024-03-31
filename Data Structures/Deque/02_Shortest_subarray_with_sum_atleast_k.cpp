@@ -59,7 +59,16 @@ using namespace std;
 
 // This means element pref[i] is now useless 
 
-// Simplify the equation to get the starting point -->  pref[j] - k >= pref[i] .. ( ith pointer as starting for valid Subarray )
+
+// ANOTHER PART IS ANSWER CALCULATION ------------------->>
+
+// In the Deque, during the removing phase i.e remove(), Check if the starting pointers i.e current dq.front() is making a valid Subarray 
+// with the current indx (i) i.e pref[i] - k >= pref[st] .. 
+// If it is making a Valid subarray, consider it and remove it from front becz if we keep it , it will make valid Subarray of greater length...
+// the first one is the Shortest...
+// pref --> 3, 5, 7, 9  ,  k = 4
+// indx at 7 --> with 3 as dq.front(), makes valid subarray --> it will also make valid one with 9 but not the Shortest..
+// st pointer as 5 --> 5 is not making valid one with current indx 7 , lets move ahead and we will pop 5 later when required
 
 // We have to check this to ensure that subarray considered is of sum >= k
 
@@ -78,10 +87,80 @@ using namespace std;
 // If pref[i] > pref[j] --> so , we keep popping elements from back and push current element becz this inserted elements are useless
 // if pref[i] < pref[j]  --> simply insert in the deque the current j
 
+// Why do we have a prefix array and not just the initial array like in sliding window :
+// Because in the sliding window when we move start (typically when we increment it) we can just substract nums[start-1] from the current sum 
+// and we get the sum of the new subarray. Here the value of the start is jumping and one way to compute the sum of the current subarray in a 
+// constant time is to have the prefix array.
+
+// Starting pointers are not Contigous
+
+
+void monotonic_insert(deque<int> &dq, int i, vector<long long> &pref){
+
+    while(dq.size() && pref[dq.back()] > pref[i]){
+        dq.pop_back();
+    }
+
+    dq.push_back(i);
+
+}
+
+int remove(deque<int> &dq, int i, vector<long long> &pref, int k){
+
+    int ans = pref.size() + 1;
+
+    while(dq.size() && pref[i] - k >= pref[dq.front()]){
+        ans = min(ans, i - dq.front());
+        dq.pop_front();
+    }
+
+    return ans;
+
+}
+
 
 int shortestSubarray(vector<int>& arr, int k) {
 
-    
+    int n = arr.size();
+
+    // 1 based to not check explicity the l = 0 case
+    vector<long long> pref(n+1, 0);
+
+    for(int i=1;i<=n;i++){
+        pref[i] = arr[i-1] + pref[i-1];
+    }
+
+    // arr[j] - arr[i] >= k
+    // arr[i] <= arr[j] - k
+    // Smaller is better, closer is better
+    // far + bigger --> useless
+
+    int ans = pref.size() + 1;
+
+    deque<int> dq;
+
+    for(int i=0; i <= n; i++){
+
+        ans = min(ans, remove(dq, i, pref, k));
+
+        cout << ans << endl;
+
+        monotonic_insert(dq, i, pref);
+
+    }
+
+    if(ans == pref.size() + 1) return -1;
+
+    return ans;
 
 }
+
+
+// LEARNINGS FROM 2 QUESTION ABOUT DEQUE ----------------->>
+// 1. Try to keep the Deque monotonic ... for that --> Find the condition , you want ascending or descending..
+// Anything disrupting Monotonic thing, just pop_back
+
+// 2. Monotonic Deque code structure never change ... Try to modify those functions based on Your condition
+
+// 3. In remove() , you remove from front AND In monotonic_insert, you make a Monotonic insert of the element in the deque
 
