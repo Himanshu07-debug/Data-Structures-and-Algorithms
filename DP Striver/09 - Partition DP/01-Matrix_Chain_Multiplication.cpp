@@ -25,7 +25,7 @@
 // NOTE -> In partition DP, you have to consider the entire array
 
 // For array of n+1 size, we will considered n matrices from no. 1 to n-1
-// For each indx matrix, The actual matrix is --> arr[i - 1] * arr[i]
+// For each indx matrix, The actual matrix is --> arr[i - 1] * arr[i] i.e ith matrix is this
 
 // So i = 1 and j = n-1 [ indexes includes n matrices ]
 // f(i,j) -> Min. operation to get the Product of matrix from Mi to Mj
@@ -43,11 +43,25 @@
 
 // All possible partition me se min. ans selected
 
-// When you make the partition, You multiply the respective 2 matrix at that moment..
-// If Partioned range has no. more than 2 ...
-// A (B C D) --> Iss moment pe konse 2 matrix multiply honge --> 
-// B C D Dimension --> B ka row and D ka column will be the dimension of final matrix..
-// Multiplication with A -> A ka row and D ka col
+// this is LR dp, every subproblem will be independent... 
+// if i have to calculate the number of operation due to current partition , see the observation --->
+
+// let the matrix are A B C D and dimension --> [ 10 20 30 40 50 ], l = 1 and r = 4
+
+// if partition made at A --> (A) (B C D)
+// we will not go bottom up i.e BCD ko solve krnge and the operation will be updated here... In matrix multiplication, we can do it directly..
+// what is the resultant matrix dimension of (B C D) --> 
+// take any internal combination like  --> B (C D) or (B C) D or B C D --> all will lead to dimension --> B row * D col
+// Any if we multiply this with A --> A row * D col
+
+// take one more example --> (A B) (C D) --> partition made at B
+// dimension --> A row * B col   &&& C row and D col
+// resultant --> A row * D col
+
+// see You can directly find out the operation....
+// for range (l r), make partition at any K ( l <= k <= r-1 ) .... arr[l - 1] * arr[k] * arr[r]
+
+// arr[l-1] and arr[r] remains common as bound for the current range... only K value changes .. becz it is based on partition... 
 
 
 // RECURSION ------------------------------------>>>
