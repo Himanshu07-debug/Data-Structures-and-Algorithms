@@ -53,7 +53,12 @@ vector<int> postOrder(node* root)
             prevPrintedNode = curr;
 
             st.pop();
-            curr = st.top();
+            
+            // Hamara root ho gya, now hum uske root pe jaana chahte hai, lekin st.top() directly yha pe kiye to to upar wla root first wla
+            // while loop run kar denga and stack me firse left subtree add kar denga.. We dont want so
+            // So forcefully yha pe NULL so that upar me sidha root pakde
+            // Also One more thing, agar curr ka root hota hi nhi to.. stack to empty honga.. st.top() no access
+            curr = NULL;
 
         }
         else{

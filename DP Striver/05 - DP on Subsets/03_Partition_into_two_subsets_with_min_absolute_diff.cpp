@@ -73,7 +73,7 @@ int minSubsetSumDifference(vector<int>& arr, int n)
 
 	for(int x : arr) s += x;
 
-	int k = s/2;
+	int k = s;
 
 	vector<vector<int>> dp(n, vector<int>(k + 1, -1));
 
@@ -83,9 +83,11 @@ int minSubsetSumDifference(vector<int>& arr, int n)
 
     }
 
+    // above loop as a whole will take the time as n*k ( as n*k states of DP are only possible, see tabulation for more clearance )
+
 	int mi = INT_MAX;
 
-	for(int i=0; i <= k; i++){
+	for(int i=0; i <= k/2; i++){
 		if(dp[n-1][i] == true){
 			int rem = s - i;
 			mi = min(mi, abs(rem - i));

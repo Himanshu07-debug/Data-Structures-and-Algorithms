@@ -19,7 +19,6 @@
 
 // RULES FOR PARTITION DP -->
 
-
 // 1. Start with the entire block/array and mark it with i,j. We need to find the value of f(i,j). 
 
 // NOTE -> In partition DP, you have to consider the entire array
@@ -92,10 +91,10 @@ int fun(vector<int> &arr, int i, int j){
 
 int matrixMultiplication(vector<int>& arr, int N){
     
-    int i =1;
+    // the complete block array with i and j range
+    int i = 1;
     int j = N-1;
-    
-    
+
     return fun(arr,i,j);
     
     

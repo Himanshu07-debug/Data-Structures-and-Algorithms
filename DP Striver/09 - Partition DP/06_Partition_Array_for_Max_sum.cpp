@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// this is similar to Palindorme Partitioning Problem
+
 // Recursion --->
 
 // We are allowed to make subarray of length atmost k.

@@ -67,7 +67,7 @@ int solve(int ind, vector<int>& height, vector<int>& dp){
 
 int main() {
 
-    vector<int> height{30,10,60 , 10 , 60 , 50};
+    vector<int> height{30,10,60,10,60,50};
     int n=height.size();
     vector<int> dp(n,-1);
     cout<<solve(n-1,height,dp);

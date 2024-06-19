@@ -3,7 +3,7 @@
 
 // Input: expression = “T|T&F”
 // Output: 1
-// Explanation: The only way to get the resuLT as true is:
+// Explanation: The only way to get the resuLt as true is:
 // (T) | (T&F) = T|F = T 
 
 
@@ -15,8 +15,16 @@
 
 // The only Hack here is that To think for each Symbol , What are the Possible values of Left and Right haLF are Acceptable ..
 
+// OBSERVE Carefully, aapko sirf true ka hi cnt nhi sochna hai partition ke left and right sub parts ka.. You should also know about the false
+// resulting ways of the both sides... as while solving expressions results... False values can also be used... 
+// ex --> OR yields true.. even if one side is false... 
+
 // For ex -> We want true ( I am Lazy, I will only worry about the my work & rest Recursion will do )
+
+// if there are total x1 + y1 diff ways of partitions in the left part, out of them ->
 // Let I have x1 no. of ways to get true and y1 no. of ways to get False in the left paRT
+
+// if there are total x2 + y2 diff ways of partitions in the right part, out of them ->
 // Let x2 no. of ways to get true and y2 no. of ways to get False in Right paRT...
 
 // If symbol is AND -->
@@ -25,12 +33,14 @@
 // If OR --> x1 * x2  +  x1 * y2  +  x2 * y1
 
 
+// So most Important TIP of this problem --> keep track of count of both values (True and false) for each partition ( each subparts )
+
 // BASE CASE ---> 
 // i > j
 
-// Single element -->
-// i == j ----> if(isTrue == 1) return (exp[i] == 'T')  else if(isTrue == 0) return (exp[i] == 'F')
-
+// Single element --> i == j 
+// if i want true and get the exp[i] as true... return 1 or 0
+// vice versa for false
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -95,7 +105,12 @@ int evaluateExp(string &exp) {
 
 // RECURSION ---> Exponential
 
-// MEMOIZATION --> 2 changing Parameters --> O(n * n * 2 * n) --> O(n ^ 3) TIME  &&  O(n * n) + O(n) [ Stack Space ]
+// MEMOIZATION --> 3 changing Parameters --> O(n * n * 2 * n) --> O(n ^ 3) TIME  &&  O(n * n) + O(n) [ Stack Space ]
+
+// dp[i][j][2]
+
+
+// TABULATION
 
 
 
